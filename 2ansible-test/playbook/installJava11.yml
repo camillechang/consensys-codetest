@@ -1,0 +1,11 @@
+---
+- hosts: web
+  tasks:
+    - name: Task -2 Install Java using Ansible
+      become: yes
+      yum:
+        name: '{{ packages }}'
+        state: present
+      vars:
+        packages:
+          - openjdk-11-jdk

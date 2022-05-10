@@ -1,0 +1,26 @@
+services:
+  besu:
+    image: hyperledger/besu:latest
+    environment:
+      - LOG4J_CONFIGURATION_FILE=/opt/besu/conf/log-config.xml
+    volumes:
+      - ./config/besu:/opt/besu/conf/
+      - ./data/besu:/opt/besu/data/
+    command: ['--config-file=/opt/besu/conf/besu.conf']
+    ports:
+      - 8515:8545
+      - 8516:8546
+      - 8517:8547
+    networks:
+      main:
+        ipv4_address: 172.16.239.41
+  nginx:
+    image: nginx:latest
+    volumes:
+      - ./nginx.conf:/etc/nginx/nginx.conf
+      - ./5xx.html:/www/error_pages/5xx.html
+    ports:
+      - 80:80
+networks:
+  main:
+    driver: bridge
